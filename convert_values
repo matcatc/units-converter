@@ -1,0 +1,208 @@
+# this file contains conversion values for converter
+# the format is as follows:
+#
+# start_unit
+# {
+# end_unit conversion_value
+# .
+# .
+# .
+# }
+#
+# leading and trailing spaces are stripped, so you can indent if you so desire.
+#
+# the pound sign designates commented lines, but only works if it is the first
+# character on the line. However, extra data on the line is ignored, and as such
+# can be used as comments. Ex:
+#
+# start_unit blah blah blah blah
+# {
+#       end_unit conversion_value blah blah blah blah
+# }
+#
+# but note that the parenthesis lines (currently) cannot have other data on the
+# line. And the parenthesis cannot be combined with previous lines, as in code,
+# so the following will NOT work:
+#   start_unit {
+#       end_unit conversion_value}
+#
+# blank lines are skipped (and lines w/ only spaces are made into blank lines,
+# and thus skipped). (but both blank and commented lines are read in, before
+# skipped).
+#
+# conversion values are what you have to MULTIPLY the start_unit by to reach
+# the end_unit.
+#  i.e: start_unit * conversion_value = end_unit
+# you can enter fractions (e.g: 1/12), but one '/' is the only operation
+# allowed for values (this is because I have to parse it specifically, although
+# I could theoretically pipe the input into expression solver, but that would
+# require that users have expression solver to run converter).
+#
+# Because conversion is done by multiplication, temperature conversion are
+# currently unavailable because those require addition.
+#
+# conversion values are represented by floats, and the numbers worked with
+# are doubles, so expect the values to not be read in at exactly the right
+# value. Read up on how floats/doubles are not completely acurate on the
+# web if your interested in knowing more.
+#
+#
+# Program operation:
+#  think directed graph
+#   1) see if have conversion value from start unit to end unit
+#       a) have: use
+#   2) try going through one of the units current unit knows
+#   3) goto (1) w/ current unit
+#  program simply tries to find a route from start unit to end unit
+#   because of this, you don't have to hard code conversion values
+#   from every unit to every other unit.
+#  again, think directed graph
+#
+#                                                           Matthew A. Todd
+#                                                       matcatprg@yahoo.com
+#                                             http://one.xthost.info/matcat
+#
+#
+#                       LENGTH
+#
+kilometer
+{
+    meter 1000
+}
+meter
+{
+    kilometer 1/1000
+    centimeter 100
+    millimeter 1000
+    foot 3.2808399
+}
+centimeter
+{
+    meter 1/100
+}
+millimeter
+{
+    meter 1/1000
+}
+mile
+{
+    yard 1760
+}
+yard
+{
+    mile 0.000568181818
+    foot 3
+    inch 36
+}
+foot
+{
+    yard 1/3
+    inch 12
+    meter 0.3048
+}
+inch
+{
+    foot 1/12
+    yard 1/36
+}
+#
+#                           SPEED
+#
+mph
+{
+    kph 1.609344
+    knot 0.868976242
+}
+kph
+{
+    mph 0.621371192
+    knot 0.53995680
+    mps 0.27778
+}
+# meters per second
+mps
+{
+    kph 3.6
+}
+knot
+{
+    mph 1.15077945
+    kph 1.85200
+}
+#
+#                       MASS
+#
+tonne
+{
+    kilogram 1000
+}
+kilogram
+{
+    gram 1000
+    tonne 1/1000
+}
+gram
+{
+    kilograms 1/1000
+    ounce 0.0352739619
+}
+ounce
+{
+    gram 28.3495231
+    pound 1/16
+}
+pound
+{
+    ounce 16
+}
+#
+#                       VOLUME (liquid)
+#
+#US gallon
+liter
+{
+    milliliter 1000
+    gallon 0.264172052
+    pint 2.11337642
+}
+milliliter
+{
+    liter 1/1000
+    cubic_cm 1
+}
+cubic_cm
+{
+    milliliter 1
+}
+gallon
+{
+    liter 3.78541178
+    pint 8
+    quart 4
+}
+quart
+{
+    pint 2
+    gallon 1/4
+}
+pint
+{
+    gallon 1/8
+    quart 1/2
+    cup 2
+    liter 0.473176473
+}
+cup
+{
+    pint 1/2
+    tablespoon 16
+}
+tablespoon
+{
+    cup 1/16
+    teaspoon 3
+}
+teaspoon
+{
+    tablespooon 1/3
+}
