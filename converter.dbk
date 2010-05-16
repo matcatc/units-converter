@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE refentry PUBLIC
+"-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.docbook.org/xml/4.5/docbookx.dtd"
+[
+<!ENTITY product "converter">
+]>
+
+<refentry lang="en" id="converter">
+	<refentryinfo>
+		<productname>&product;
+		</productname>
+		<authorgroup>
+			<author>
+				<contrib>Developer</contrib>
+				<firstname>Matthew</firstname>
+				<surname>Todd</surname>
+				<email>matcatprg@yahoo.com</email>
+			</author>
+		</authorgroup>
+	</refentryinfo>
+	<refmeta>
+		<refentrytitle>&product;
+		</refentrytitle>
+		<manvolnum>1</manvolnum>
+		<refmiscinfo class="version">@VERSION@</refmiscinfo>
+		<refmiscinfo class="source">http://one.xthost.info/matcat/programs/math/unitconverter.html
+		</refmiscinfo>
+		<refmiscinfo class="manual">http://one.xthost.info/matcat/programs/math/unitconverter.html
+		</refmiscinfo>
+	</refmeta>
+
+	<refnamediv>
+		<refname>&product;
+		</refname>
+		<refpurpose>A program that converts between different measurement unit
+			types.</refpurpose>
+	</refnamediv>
+
+	<refsynopsisdiv id="converter.synopsis">
+		<title>Synopsis</title>
+		<cmdsynopsis>
+			<command>converter</command>
+			<arg choice="opt">
+				--file
+				<replaceable>file_containing_conversion_values</replaceable>
+			</arg>
+			<arg choice="req">
+				<replaceable>value</replaceable>
+			</arg>
+			<arg choice="req">
+				<replaceable>start_unit</replaceable>
+			</arg>
+			<arg choice="req">
+				<replaceable>end_unit</replaceable>
+			</arg>
+		</cmdsynopsis>
+		<cmdsynopsis>
+			<command>converter</command>
+			<arg choice="req">
+				<arg choice="opt">--help</arg>
+				|
+				<arg choice="opt">-V</arg>
+			</arg>
+		</cmdsynopsis>
+	</refsynopsisdiv>
+
+	<refsect1 id="converter.description">
+		<title>Description</title>
+		<para>Simply put, converter converts between the units defined in
+			convert_values. The file has a description of how it defines units,
+			thereby allowing you to define your own units. The technical
+			description below also explains how to define units, along with the
+			program's inner workings.</para>
+	</refsect1>
+
+	<refsect1 id="converter.technical_description">
+		<title>Technical Description</title>
+		<para>Converter functions much like a directed graph. The program
+			starts with some start unit, value, and end unit. If it can go strait
+			to the end unit (if it has the conversion value between the two) it
+			just does that. Otherwise it tries to go down the other "routes" it
+			knows until it ends up in the end unit or runs out of routes. I.e: it
+			converts into one of the units it can, and tries to go to the end
+			unit from there. The algorithm is basically as follows:</para>
+		<orderedlist>
+			<listitem>
+				<para>See if we have conversion value from start/current unit to end
+					unit. If so, use.</para>
+			</listitem>
+			<listitem>
+				<para>Try going through one of the units current unit knows.</para>
+			</listitem>
+			<listitem>
+				<para>goto (1).</para>
+			</listitem>
+		</orderedlist>
+		<para>Converter initializes all its unit types and their conversion
+			values from an external file, the default which is "convert_values."
+			If one wants to add/edit units and/or conversion values, then simply
+			editing the file is sufficient. The file syntax is as follows:</para>
+		<screen>
+# comment
+start_unit
+{
+    end_unit conversion_value
+    end_unit conversion_value
+    ...
+}
+    </screen>
+		<para>Leading and trailing spaces are stripped, allowing for
+			indentation; the pound sign comments a line (must be at beginning of
+			the line); extra parameters on a line (except bracket lines) are
+			ignored, allowing for comments there; blank lines are skipped.</para>
+		<para>Conversion values are represented by floats, which means that
+			there will be some slight inaccuracy because of how computers
+			represent them in memory. Conversion values are the value by which
+			you have to multiply the start unit to result in the end unit. There
+			currently is no way to do addition or any other kind of arithmetic,
+			preventing from converting between certain units (temperature).
+			Conversion values can be represented as a fraction (i.e: 1/12).
+		</para>
+	</refsect1>
+
+	<refsect1 id="converter.options">
+		<title>Options</title>
+		<variablelist>
+			<varlistentry>
+				<term>
+					<option>--help</option>
+				</term>
+				<listitem>
+					<para>list simplistic usage information</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					<option>--version</option>
+				</term>
+				<listitem>
+					<para>license and version information</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					<option>--file</option>
+				</term>
+				<listitem>
+					<para>file with all conversion information (units and values) to
+						use.</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</refsect1>
+
+	<refsect1 id="converter.example">
+		<title>Example</title>
+		<screen>
+$ ./converter 1 foot inch
+1 foot = 12 inch(s)
+$ ./converter --value 1 --start foot --end inch
+1 foot = 12 inch(s)
+    </screen>
+	</refsect1>
+
+	<refsect1 id="converter.license">
+		<title>License</title>
+		<para>Converter is licensed under <ulink url="http://www.gnu.org/licenses/gpl.html">gnu gpl v. 3.0</ulink>.</para>
+	</refsect1>
+	
+	<refsect1 id="converter.download">
+		<title>Download</title>
+		<para><ulink url="http://github.com/matcatc/units-converter">http://github.com/matcatc/units-converter</ulink></para>
+	</refsect1>
+	
+</refentry>
