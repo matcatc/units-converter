@@ -1,1 +1,13 @@
 The official documentation is contained in converter.docbook.
+
+Updates:
+- Project is no longer actively maintained. But you can still send me
+  questions, bugs, etc. Its a simple project, so there's not really more to do,
+  AFAIK.
+- The documentation now has some broken links.
+- Since I was just learning docbook back then, I wrote it in raw docbook. If I
+  were to do it again (or work on the docs anymore), I'd redo it in asciidoc,
+  which can generate docbook. And I would have it in this file, so we'd have
+  only file with the documentation. Live and learn.
+
+
